@@ -135,7 +135,7 @@ function Test() {
 
 ## Server Function Context
 
-In addition to the single parameter that server functions accept, you can also access server request context from within any server function using many utilites from `vinxi/http`. Under the hood, Vinxi uses `unjs`'s `h3` package to perform cross-platform HTTP requests.
+In addition to the single parameter that server functions accept, you can also access server request context from within any server function using many utilities from `vinxi/http`. Under the hood, Vinxi uses `unjs`'s `h3` package to perform cross-platform HTTP requests.
 
 There are many context functions available to you for things like:
 
@@ -143,7 +143,7 @@ There are many context functions available to you for things like:
 - Accessing/setting headers
 - Accessing/setting sessions/cookies
 - Setting response status codes and status messages
-- Dealing with mulit-part form data
+- Dealing with multi-part form data
 - Reading/Setting custom server context properties
 
 For a full list of available context functions, see all of the available [h3 Methods](https://h3.unjs.io/utils/request) or inspect the [Vinxi Exports Source Code](https://github.com/nksaraf/vinxi/blob/main/packages/vinxi/runtime/http.js#L232-L320).
@@ -159,11 +159,11 @@ import { createServerFn } from '@tanstack/start'
 import { getWebRequest } from 'vinxi/http'
 
 export const getServerTime = createServerFn('GET', async () => {
-  const { method } = getWebRequest()
+  const request = getWebRequest()
 
-  console.log(method) // GET
+  console.log(request.method) // GET
 
-  console.log(context.request.headers.get('User-Agent')) // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3
+  console.log(request.headers.get('User-Agent')) // Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3
 })
 ```
 
@@ -245,14 +245,14 @@ export const getServerTime = createServerFn('GET', async () => {
 
 ## Responding with Custom Status Codes
 
-To respond with a custom status code, you can use Vinxi's `setStatus` function:
+To respond with a custom status code, you can use Vinxi's `setResponseStatus` function:
 
 ```tsx
 import { createServerFn } from '@tanstack/start'
-import { setStatus } from 'vinxi/http'
+import { setResponseStatus } from 'vinxi/http'
 
 export const getServerTime = createServerFn('GET', async () => {
-  setStatus(201)
+  setResponseStatus(201)
   return new Date().toISOString()
 })
 ```
